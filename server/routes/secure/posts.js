@@ -5,6 +5,7 @@ const isAdmin = require("../../middleware/authorization/index"),
 		editPostById,
 		deletePostById,
 		deleteAllPosts,
+		uploadImages,
 	} = require("../../controllers/postController");
 
 router.post("/entry", publishPosts);
@@ -12,6 +13,6 @@ router.patch("/article/:id", editPostById);
 router.post("/images", uploadImages);
 
 router.delete("/article/:id", deletePostById);
-router.delete("/archives", user.isAdmin, deleteAllPosts);
+router.delete("/archives", isAdmin, deleteAllPosts);
 
 module.exports = router;

@@ -3,7 +3,7 @@ const express = require("express"),
 	app = express();
 const openRouter = require("./routes/open/index");
 const guestRouter = require("./routes/open/posts");
-const trollRouter = require("./routes/open/troll");
+const trollRouter = require("./routes/open/trollComments");
 const userRouter = require("./routes/secure/users");
 const postRouter = require("./routes/secure/posts");
 const commentRouter = require("./routes/secure/comments");
@@ -19,7 +19,7 @@ app.use(express.json());
 //Unauthenticated routes
 app.use("/blog/", openRouter);
 app.use("/blog/guest", guestRouter);
-app.use("/blog/leaveacomment", trollRouter);
+app.use("/blog/", trollRouter);
 
 //then...middleware that will parse cookie :P
 app.use(cookieParser());

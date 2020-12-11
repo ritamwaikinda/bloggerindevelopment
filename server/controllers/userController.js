@@ -1,6 +1,6 @@
 const User = require("../db/models/user");
 const jwt = require("jsonwebtoken");
-const cloudinary = require("cloudinary").v2,
+const cloudinary = require("cloudinary").v2;
 
 //unsecured
 exports.loginUser = async (req, res) => {
@@ -56,14 +56,24 @@ exports.logoutUser = async (req, res) => {
 };
 
 exports.uploadAvatar = async (req, res) => {
-try {
-	const response = await cloudinary.uploader.upload(
-		req.files.avatar.tempFilePath
-	);
-	req.user.avatar = response.secure_url;
-	await req.user.save();
-	res.json(response);
-} catch (error) {
-	res.status(400).json({ error: error.message });
-}
+	try {
+		const response = await cloudinary.uploader.upload(
+			req.files.avatar.tempFilePath
+		);
+		req.user.avatar = response.secure_url;
+		await req.user.save();
+		res.json(response);
+	} catch (error) {
+		res.status(400).json({ error: error.message });
+	}
+};
+
+exports.findUserById = async (req, res) => {
+	try {
+		console.log(req.params.id);
+		let user = await User.findById(req.params.id);
+		res.json(user);
+	} catch (error) {
+		res.status(400).json({ error: error.message });
+	}
 };

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Comment = require("../db/models/commentcomment");
+const Comment = require("../db/models/comment");
 const User = require("../db/models/user");
 const Post = require("../db/models/post");
 
@@ -26,7 +26,7 @@ exports.addComment = async (req, res) => {
 };
 
 //secured
-exports.editComments = async (req, res) => {
+exports.editComment = async (req, res) => {
 	const edits = Object.keys(req.body);
 	try {
 		const comments = await Comment.findById(id);

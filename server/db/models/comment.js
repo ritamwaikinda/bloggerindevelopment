@@ -4,7 +4,7 @@ const commentSchema = new mongoose.Schema(
 	{
 		member: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: User,
+			ref: "User",
 		},
 		guest: {
 			type: String,

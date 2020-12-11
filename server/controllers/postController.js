@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const Post = require("../db/models/postModel");
-const User = require("../db/models/userModel");
+const Post = require("../db/models/post");
+const User = require("../db/models/user");
 const cloudinary = require("cloudinary").v2;
 
 //unsecured
@@ -33,7 +33,7 @@ exports.findAllPostsByUser = async (req, res) => {
 };
 
 //secured
-exports.publishPost = async (req, res) => {
+exports.publishPosts = async (req, res) => {
 	const { owner, title, text } = req.body;
 	try {
 		const post = new Post({

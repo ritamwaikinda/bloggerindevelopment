@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const isAdmin = require("../../middleware/authorization/index"),
 	{
-		addComment,
+		// addComment,
 		editComment,
 		deleteCommentById,
 		deleteAllComments,
@@ -11,6 +11,6 @@ const isAdmin = require("../../middleware/authorization/index"),
 router.patch("/article/:id/comments/:id", editComment);
 
 router.delete("/article/:id/comments/:id", deleteCommentById);
-router.delete("/article/:id/comments", user.isAdmin, deleteAllComments);
+router.delete("/article/:id/comments", isAdmin, deleteAllComments);
 
 module.exports = router;
