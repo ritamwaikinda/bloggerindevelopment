@@ -60,17 +60,10 @@ const userSchema = new mongoose.Schema(
 	}
 );
 
-//things we want to do: everything important when putting things into the database, and taking things out of the database
-//delete hashed password and tokens when coming from database
-//give token & check tokens each time
-//encrypt password when initialized and/or changed in order to keep it safe
-//add cloudinary...
-
 //critical
 userSchema.methods.toJSON = function () {
 	const user = this;
 	const userObject = user.toObject();
-	//const userObject = user.this.toObject();?
 	delete userObject.password;
 	delete userObject.tokens;
 	return userObject;
@@ -98,6 +91,15 @@ userSchema.methods.assignToken = async function () {
 	user.tokens = user.tokens.concat({ token });
 	await user.save();
 	return token;
+};
+
+//compare passwords using bcrypt
+userSchema.methods.findByCredentials = async (email, password) => {
+	const user = await User.findOne({ email });
+	if (!user) throw new Error("Invalid username or password");
+	const isMatch = await bcrypt.compare(password, user.password);
+	if (!isMatch) throw new Error("Invalid username or password");
+	return user;
 };
 
 const User = mongoose.model("User", userSchema);

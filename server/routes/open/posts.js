@@ -5,7 +5,7 @@ const router = require("express").Router(),
 	} = require("../../controllers/postController");
 
 router.get(
-	`/article/${req.body.id}`,
+	"/article/:id",
 	findPostById
 ); /*find all blog posts, but use a search*/
 router.get("/archives", findAllPostsByUser);

@@ -1,7 +1,4 @@
 //call express, and create an express app
-//then set variable names for all your route paths.
-//i like to do it in order of open then secure
-
 const express = require("express"),
 	app = express();
 const openRouter = require("./routes/open/index");
@@ -10,15 +7,13 @@ const trollRouter = require("./routes/open/troll");
 const userRouter = require("./routes/secure/users");
 const postRouter = require("./routes/secure/posts");
 const commentRouter = require("./routes/secure/comments");
-
-// const passport = require("./middleware/authentication/index"),
-// 	fileUpload = require("express-fileupload"),
-// 	cookieParser = require("cookie-parser"),
-// 	path = require("path");
+const cookieParser = require("cookie-parser");
+const fileUpload = require("express-fileupload");
+const path = require("path");
+const passport = require("./middleware/authentication/index");
 
 // middleware that will let us read the json that we bring in.
 //Turn it into an object, basically :)
-
 app.use(express.json());
 
 //Unauthenticated routes
@@ -29,13 +24,10 @@ app.use("/blog/leaveacomment", trollRouter);
 //then...middleware that will parse cookie :P
 app.use(cookieParser());
 
-//why static after middleware? shouldn't it be above unauth? above json even? maybe? oh well, i'm just a worker-bee lol
-//directory-../../ ability lol jumping from one to other i think
+//static
 if (process.env.NODE_ENV === "production ") {
 	app.use(express.static(path.resolve(__dirname, ",,", "client", "build")));
 }
-
-//picture-grabbing
 app.use(
 	fileUpload({
 		useTempFiles: true,
@@ -43,8 +35,7 @@ app.use(
 	})
 );
 
-//middleware that will check token....
-//anything to do with proving who you are based on that cookie
+//middleware that will check token.... make sure you are legit to go on...
 app.use("/blog", passport.authenticate("jwt", { session: false }));
 
 //Authenticated Routes
@@ -54,13 +45,11 @@ app.use("/blog/comments", commentRouter);
 
 // Handle React routing, return all requests to React app
 if (process.env.NODE_ENV === "production") {
-	app.get("*", (req, res) => {
-		res.sendFile(
+	app.get("*", (request, response) => {
+		response.sendFile(
 			path.resolve(__dirname, "..", "client", "build", "index.html")
 		);
 	});
 }
-
-//
 
 module.exports = app;

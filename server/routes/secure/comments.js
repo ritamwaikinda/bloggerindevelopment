@@ -1,13 +1,17 @@
-const router = require("express").Router();
-{} = require(/*insert module.exports paths*/);
+const router = require("express").Router(),
+	{
+		addComment,
+		editComment,
+		deleteCommentById,
+	} = require("../../controllers/commentController");
 
-router.post(`/article/${req.body.id}`, addComment); /*add and change all comments*/
-router.patch(`/article/${req.body.id}`, editComment);
+router.post("/article/:id", addComment); /*add and change all comments*/
+router.patch("/article/:id", editComment);
 
 // router.get('/', findCommentById); /*find all comments*/
 // router.get('/', findAllCommentsByUser);
 
-router.delete(`/article/${req.body.id}`, deleteCommentById); /*delete all comments*/
+router.delete("/article/:id", deleteCommentById); /*delete all comments*/
 //set admin priviledges??
 // router.delete('/', deleteAllComments);
 
