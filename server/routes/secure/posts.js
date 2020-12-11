@@ -1,4 +1,5 @@
-const router = require("express").Router(),
+const router = require("express").Router();
+const isAdmin = require("../../middleware/authorization/index"),
 	{
 		publishPosts,
 		editPostById,
@@ -6,11 +7,11 @@ const router = require("express").Router(),
 		deleteAllPosts,
 	} = require("../../controllers/postController");
 
-router.post("/entry", publishPosts); /*write and edit all blog posts*/
+router.post("/entry", publishPosts);
 router.patch("/article/:id", editPostById);
 router.post("/images", uploadImages);
 
-router.delete("/article/:id", deletePostById); /*delete all blog posts*/
-router.delete("/archives", deleteAllPosts);
+router.delete("/article/:id", deletePostById);
+router.delete("/archives", user.isAdmin, deleteAllPosts);
 
 module.exports = router;

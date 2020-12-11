@@ -14,11 +14,6 @@ const criticSchema = new mongoose.Schema(
 	{
 		timestamp: true,
 	}
-	// {
-	// 	ipAddress: {
-	// 		type: Number
-	// 	}
-	// }
 );
 
 const Critic = mongoose.model("Critic", criticSchema);

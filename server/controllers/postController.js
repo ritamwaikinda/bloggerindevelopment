@@ -91,4 +91,9 @@ exports.deletePostById = async (req, res) => {
 	}
 };
 
-// deleteAllPosts;
+exports.deleteAllPosts = async (posts = []) => {
+	const deletePosts = posts.map(async (post) => {
+		await Post.findByIdAndDelete(post._id);
+	});
+	await Promise.all(deletePosts);
+};

@@ -1,18 +1,16 @@
-const router = require("express").Router(),
+const router = require("express").Router();
+const isAdmin = require("../../middleware/authorization/index"),
 	{
 		addComment,
 		editComment,
 		deleteCommentById,
+		deleteAllComments,
 	} = require("../../controllers/commentController");
 
-router.post("/article/:id", addComment); /*add and change all comments*/
-router.patch("/article/:id", editComment);
+// router.post("/article/:id/comments", addComment);
+router.patch("/article/:id/comments/:id", editComment);
 
-// router.get('/', findCommentById); /*find all comments*/
-// router.get('/', findAllCommentsByUser);
-
-router.delete("/article/:id", deleteCommentById); /*delete all comments*/
-//set admin priviledges??
-// router.delete('/', deleteAllComments);
+router.delete("/article/:id/comments/:id", deleteCommentById);
+router.delete("/article/:id/comments", user.isAdmin, deleteAllComments);
 
 module.exports = router;
