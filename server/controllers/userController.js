@@ -4,8 +4,8 @@ const User = require("../db/models/user");
 exports.loginUser = async (req, res) => {
 	const { email, password } = req.body;
 	try {
-		const user = await user.findByCredentials(email, password);
-		const token = await user.assignToken();
+		const user = await User.findByCredentials(email, password);
+		const token = await User.assignToken();
 		res.cookie("jwt", token, {
 			httpOnly: true,
 			sameSite: "Strict",
