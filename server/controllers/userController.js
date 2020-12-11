@@ -1,4 +1,6 @@
 const User = require("../db/models/user");
+const jwt = require("jsonwebtoken");
+const cloudinary = require("cloudinary").v2,
 
 //unsecured
 exports.loginUser = async (req, res) => {
@@ -27,7 +29,7 @@ exports.createUser = async (req, res) => {
 			email,
 			password,
 		});
-		const token = await user.assignToken();
+		const token = await User.assignToken();
 		res.cookie("jwt", token, {
 			httpOnly: true,
 			sameSite: "Strict",
@@ -51,4 +53,17 @@ exports.logoutUser = async (req, res) => {
 	} catch (err) {
 		res.status(400).json({ error: err.message });
 	}
+};
+
+exports.uploadAvatar = async (req, res) => {
+try {
+	const response = await cloudinary.uploader.upload(
+		req.files.avatar.tempFilePath
+	);
+	req.user.avatar = response.secure_url;
+	await req.user.save();
+	res.json(response);
+} catch (error) {
+	res.status(400).json({ error: error.message });
+}
 };

@@ -7,12 +7,10 @@ const router = require("express").Router(),
 	} = require("../../controllers/postController");
 
 router.post("/entry", publishPosts); /*write and edit all blog posts*/
-router.patch(`/article/${req.body.id}`, editPostById);
+router.patch("/article/:id", editPostById);
+router.post("/images", uploadImages);
 
-router.delete(
-	`/article/${req.body.id}`,
-	deletePostById
-); /*delete all blog posts*/
+router.delete("/article/:id", deletePostById); /*delete all blog posts*/
 router.delete("/archives", deleteAllPosts);
 
 module.exports = router;

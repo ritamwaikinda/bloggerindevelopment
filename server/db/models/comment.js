@@ -2,16 +2,19 @@ const mongoose = require("mongoose");
 
 const commentSchema = new mongoose.Schema(
 	{
-		user: {
+		member: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: User,
-			required: true,
 		},
-		//can you do memberUser and anonUser? One has to be required: true? :/ better not
+		guest: {
+			type: String,
+			required: function () {
+				return this.user === !user;
+			}, // Only required if a equals '!user'
+		},
 		text: {
 			type: String,
 			required: true,
-			//set front-end//as a guest, your maximum character length is 20. Please register an account to enjoy full access to our comments section.
 		},
 		//stretchgoal emojis
 	},

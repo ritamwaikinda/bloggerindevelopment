@@ -37,10 +37,22 @@ const userSchema = new mongoose.Schema(
 		avatar: {
 			type: String,
 		},
-		posts: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Post",
-		},
+		posts: [
+			{
+				post: {
+					type: mongoose.Schema.Types.ObjectId,
+					ref: "Post",
+				},
+			},
+		],
+		comments: [
+			{
+				comment: {
+					type: mongoose.Schema.Types.ObjectId,
+					ref: "Comments",
+				},
+			},
+		],
 		tokens: [
 			{
 				token: {
