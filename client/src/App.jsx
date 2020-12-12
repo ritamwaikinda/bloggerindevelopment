@@ -9,14 +9,14 @@ import Account from "./Pages/Account/Account";
 import Articles from "./Pages/Article/Article";
 import { AppContextProvider } from './Context/AppContext';
 
-// import NavigationBar from './components/NavigationBar';
+import Navbar from "./Components/Navbar";
 import "./App.css";
 
 function App() {
 	return (
 		<AppContextProvider>
 		<BrowserRouter>
-		  {/* <NavigationBar /> */}
+		  <Navbar />
 		  <Switch>
 			<Route exact path="/signup" component={SignUp} />
 			<Route exact path="/login" component={Login} />

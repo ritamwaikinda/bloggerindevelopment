@@ -1,0 +1,33 @@
+body {
+	background-color: rgba(255, 255, 255, 0.5);
+}
+ul {
+	float: right;
+}
+ul li {
+	display: inline-block;
+	list-style: none;
+	float: left;
+	transition: 0.5s;
+}
+ul li a {
+	text-decoration: none;
+	font-size: 16px;
+	font-weight: 500;
+	margin: 5px;
+	padding: 5px;
+	color: #000;
+	border: 3px solid #000;
+	border-radius: 20px;
+}
+ul li a:hover {
+	color: #daa702;
+	border: 3px solid #daa702;
+}
+ul li:hover {
+	transform: scale(1.2);
+}
+ul li a:active {
+	color: #ffd901;
+	border: 3px solid #ffd901;
+}
