@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import './Inbox.css';
-import { AppContext } from '../../context/AppContext';
+import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { AppContext } from "../../Context/AppContext";
 
 function Home() {
-const [user, setUser] = useState('');
-const [article, setArticle] = useState('');
+const [user, setUser] = useState("");
+const [article, setArticle] = useState("");
 
 useEffect(() => {
     axios.get(`/blog/latest`)
@@ -40,4 +39,4 @@ useEffect(() => {
     );
 };
 
-export default Home
+export default Home;
