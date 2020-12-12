@@ -1,4 +1,6 @@
 //call express, and create an express app
+require("./db/config/index");
+
 const express = require("express"),
 	app = express();
 const openRouter = require("./routes/open/index");

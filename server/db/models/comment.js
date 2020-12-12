@@ -27,6 +27,6 @@ const commentSchema = new mongoose.Schema(
 		timestamp: true,
 	}
 );
-//do i need to pre-save a conditional member/guest assignment id population?
+//do i need to pre-save a conditional member/guest generateAuthment id population?
 const Comment = mongoose.model("Comment", commentSchema);
 module.exports = Comment;

@@ -6,7 +6,6 @@ const postSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "User",
 			required: true,
-			//set this so only blog owner can post.
 		},
 		title: {
 			type: String,

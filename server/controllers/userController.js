@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const User = require("../db/models/user");
 const jwt = require("jsonwebtoken");
 const cloudinary = require("cloudinary").v2;
@@ -7,7 +8,7 @@ exports.loginUser = async (req, res) => {
 	const { email, password } = req.body;
 	try {
 		const user = await User.findByCredentials(email, password);
-		const token = await User.assignToken();
+		const token = await user.generateAuthToken();
 		res.cookie("jwt", token, {
 			httpOnly: true,
 			sameSite: "Strict",
@@ -29,7 +30,7 @@ exports.createUser = async (req, res) => {
 			email,
 			password,
 		});
-		const token = await User.assignToken();
+		const token = await user.generateAuthToken();
 		res.cookie("jwt", token, {
 			httpOnly: true,
 			sameSite: "Strict",
@@ -42,6 +43,10 @@ exports.createUser = async (req, res) => {
 };
 
 //secured
+exports.getCurrentUser = async (req, res) => {
+	res.json(req.user);
+};
+
 exports.logoutUser = async (req, res) => {
 	try {
 		req.user.tokens = req.user.tokens.filter((token) => {

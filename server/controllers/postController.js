@@ -35,14 +35,11 @@ exports.findAllPostsByUser = async (req, res) => {
 //secured
 exports.publishPosts = async (req, res) => {
 	const { owner, title, text } = req.body;
+	console.log(req.body);
 	try {
-		const post = new Post({
-			owner: req.body.user,
-			title: title,
-			text: text,
-		});
-		await Post.save();
-		const userPosts = await User.findById(owner);
+		const post = new Post(req.body);
+		await post.save();
+		const userPosts = await User.findOne(owner); /*or req.body.user*/
 		userPosts.posts.push(post);
 		await userPosts.save();
 		res
@@ -82,6 +79,7 @@ exports.editPostById = async (req, res) => {
 };
 
 exports.deletePostById = async (req, res) => {
+	console.log(req.body);
 	try {
 		const post = await Post.findOneAndDelete({ _id: req.params.id });
 		if (!post) return res.status(404).json({ message: "Article not found!" });
@@ -96,4 +94,9 @@ exports.deleteAllPosts = async (posts = []) => {
 		await Post.findByIdAndDelete(post._id);
 	});
 	await Promise.all(deletePosts);
+};
+
+exports.getLastFivePosts = async (req, res) => {
+	const lastFive = Post.find().skip(db.posts.count() - 5);
+	return lastFive;
 };
