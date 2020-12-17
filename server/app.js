@@ -20,7 +20,7 @@ app.use(express.json());
 
 //Unauthenticated routes
 app.use("/blog/", openRouter);
-app.use("/blog/guest", guestRouter);
+app.use("/blog/", guestRouter);
 app.use("/blog/", trollRouter);
 
 //then...middleware that will parse cookie :P
@@ -38,7 +38,7 @@ app.use(
 );
 
 //middleware that will check token.... make sure you are legit to go on...
-app.use("/blog", passport.authenticate("jwt", { session: false }));
+app.use("/blog/*", passport.authenticate("jwt", { session: false }));
 
 //Authenticated Routes
 app.use("/blog/account", userRouter);

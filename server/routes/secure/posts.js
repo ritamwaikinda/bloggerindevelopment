@@ -11,7 +11,6 @@ const isAdmin = require("../../middleware/authorization/index"),
 router.post("/entry", publishPosts);
 router.patch("/article/:id", editPostById);
 router.post("/images", uploadImages);
-
 router.delete("/article/:id", deletePostById);
 router.delete("/archives", isAdmin, deleteAllPosts);
 

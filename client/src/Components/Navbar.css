@@ -1,8 +1,10 @@
-body {
-	background-color: rgba(255, 255, 255, 0.5);
+.navbar {
+	display: flex;
+	justify-content: flex-end;
+	background-color: transparent;
 }
 ul {
-	float: right;
+	position: absolute;
 }
 ul li {
 	display: inline-block;

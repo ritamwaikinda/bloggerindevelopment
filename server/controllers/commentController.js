@@ -6,19 +6,20 @@ const Post = require("../db/models/post");
 //unsecured
 exports.addComment = async (req, res) => {
 	const { user, text, post } = req.body;
+	console.log(req.params.id);
 	try {
 		const comment = new Comment({
 			user,
 			text,
 			post,
 		});
-		await Comment.save();
-		const userComments = await User.findById(user);
-		const postComments = await Post.findById(post);
-		userComments.comments.push(comment);
+		await comment.save();
+		const postComments = await Post.findById(req.params.id);
 		postComments.comments.push(comment);
-		await userComments.save();
 		await postComments.save();
+		const userComments = await User.findOne(postComments.owner);
+		userComments.comments.push(comment);
+		await userComments.save();
 		res.status(200).json({ message: "comment submitted" });
 	} catch (err) {
 		res.status(400).json({ error: err.message });

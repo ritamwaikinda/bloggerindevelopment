@@ -1,0 +1,57 @@
+body {
+	margin: 0;
+}
+.Header {
+	/* border: 3px solid red; */
+	height: 3em;
+	width: 100%;
+}
+
+.articleBody {
+	margin: 0;
+	display: flex;
+	height: 150vh;
+	width: 100%;
+	/* border: 3px solid blue; */
+}
+.mainLeft {
+	background-image: url(../../Assets/Images/escape.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	/* opacity: 0.9; */
+	/* background-attachment: fixed; */
+	margin: 0;
+	width: 70%;
+	/* border: 3px solid green; */
+}
+
+.title {
+	/* color: silver; */
+	font-size: 102px;
+	text-align: center;
+	color: white;
+	text-shadow: 0 6px 0 black;
+}
+.aboutBlog {
+	color: white;
+	font-size: 32px;
+	text-align: left;
+	padding: 4rem;
+	background: blur;
+}
+.articlesRight {
+	/* border: 3px solid orange; */
+	width: 30%;
+	background-color: silver;
+}
+.articleTitle {
+	/* border: 3px solid aqua; */
+}
+.articleTime {
+	/* border: 3px solid brown; */
+}
+.footer {
+	/* border: 3px solid darkkhaki; */
+	height: 3rem;
+	width: 100%;
+}

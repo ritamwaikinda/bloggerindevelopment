@@ -5,11 +5,10 @@ const cloudinary = require("cloudinary").v2;
 
 //unsecured
 exports.findPostById = async (req, res) => {
-	const _id = req.params.id;
-	if (!mongoose.Types.ObjectId.isValid(_id))
+	if (!mongoose.Types.ObjectId.isValid(req.params.id))
 		return res.status(400).json({ message: "Invalid article!" });
 	try {
-		const post = await Post.findOne({ _id });
+		const post = await Post.findById(req.params.id);
 		if (!post)
 			return res.status(400).json({
 				message: "Article not found. Please try again in a few minutes.",
@@ -21,13 +20,14 @@ exports.findPostById = async (req, res) => {
 };
 
 exports.findAllPostsByUser = async (req, res) => {
-	User.findById(req.body.id)
+	User.findById(req.params.id)
 		.populate("posts")
 		.exec((err, user) => {
 			if (err) {
 				res.status(400).json({ error: err.message });
 			} else {
-				res.json(user.posts);
+				res.json(user);
+				// console.log(user.posts[1].title); **this will populate just the title
 			}
 		});
 };
@@ -39,7 +39,7 @@ exports.publishPosts = async (req, res) => {
 	try {
 		const post = new Post(req.body);
 		await post.save();
-		const userPosts = await User.findOne(owner); /*or req.body.user*/
+		const userPosts = await User.findById(req.body.owner); /*or req.body.user*/
 		userPosts.posts.push(post);
 		await userPosts.save();
 		res
@@ -96,7 +96,61 @@ exports.deleteAllPosts = async (posts = []) => {
 	await Promise.all(deletePosts);
 };
 
-exports.getLastFivePosts = async (req, res) => {
-	const lastFive = Post.find().skip(db.posts.count() - 5);
-	return lastFive;
+//~~~~~~~~~~~~~~~
+exports.deleteAllPostsByUser = async (req, res) => {
+	User.findByIdAndDelete(req.params.id)
+		.populate("posts")
+		.exec((err, user) => {
+			if (err) {
+				res.status(400).json({ error: err.message });
+			} else {
+				res.json(user);
+				// console.log(user.posts[1].title); **this will populate just the title
+			}
+		});
 };
+//~~~~~~~~~~~~~~~~~~~~~
+
+//  {
+//     ...
+//     model.service.findOneAndUpdate({ '_id': req.params.id },
+//     { $pullAll: { 'posts': { $in: req.body.posts } } },
+//     function(err, srv) {
+//         ...
+//     });
+// })
+
+exports.getLastFivePosts = async (req, res) => {
+	const lastFive = await Post.find();
+	if (lastFive.length >= 6) {
+		sendMeBack = lastFive.slice(lastFive.length - 6);
+		res.status(200).json(sendMeBack);
+	} else {
+		res.status(400).json({ error: error.message });
+	}
+};
+
+// exports.getLastFivePosts = async (req, res) => {
+// 	try {
+// 		const lastFive = await Post.find().sort({ date: "desc" }).limit(5).exec(function(error, lastFive) {
+// 			if (error) {
+// 				res.status(400).json({ error: error.message })
+// 			} else {
+// 				res.status(200).json(lastFive);
+// 			}
+// 		});
+// 		console.log(lastFive);
+// 		res.status(200).json(lastFive);
+// 	} catch (error) {
+// 		res.status(400).json({ error: error.message });
+// 	}
+// };
+// .sort({ created: "1" })
+// .limit(1)
+// .exec(function (error, lastFive) {
+// 	if (error) {
+// 		res.status(400).json({ error: error.message });
+// 	} else {
+// 		res.status(200).json(lastFive);
+// 	}
+// });

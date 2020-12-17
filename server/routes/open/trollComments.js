@@ -5,7 +5,7 @@ const router = require("express").Router(),
 		getAllCommentsByUser,
 	} = require("../../controllers/commentController");
 
-router.post("/article/:id/comments/:id", addComment);
+router.post("/article/:id/comments", addComment);
 router.get("/article/:id/comments", getAllCommentsByPost);
 router.get("/user/archives/comments", getAllCommentsByUser);
 // router.get('/', findCommentById); /*find all comments*/ to reply? nah

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 const Article = ({match}) => {
 
     const [article, setArticle] = useState({});
+    const [comment, setComment] = useState({});
   
     useEffect(() => {
       fetch(`/articles/${match.params.articleId}`)

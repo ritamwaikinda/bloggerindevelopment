@@ -9,7 +9,6 @@ const isAdmin = require("../../middleware/authorization/index"),
 
 // router.post("/article/:id/comments", addComment);
 router.patch("/article/:id/comments/:id", editComment);
-
 router.delete("/article/:id/comments/:id", deleteCommentById);
 router.delete("/article/:id/comments", isAdmin, deleteAllComments);
 
