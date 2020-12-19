@@ -3,15 +3,10 @@ const mongoose = require("mongoose");
 const commentSchema = new mongoose.Schema(
 	{
 		user: {
-			type: mongoose.Schema.Types.ObjectId || String,
+			type: mongoose.Schema.Types.ObjectId,
 			ref: "User",
+			required: true,
 		},
-		// guest: {
-		// 	type: String,
-		// 	required: function () {
-		// 		return this.member === null;
-		// 	}, // Only required if member equals '!user'
-		// },
 		post: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Post",

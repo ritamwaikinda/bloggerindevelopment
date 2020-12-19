@@ -109,48 +109,15 @@ exports.deleteAllPostsByUser = async (req, res) => {
 			}
 		});
 };
-//~~~~~~~~~~~~~~~~~~~~~
-
-//  {
-//     ...
-//     model.service.findOneAndUpdate({ '_id': req.params.id },
-//     { $pullAll: { 'posts': { $in: req.body.posts } } },
-//     function(err, srv) {
-//         ...
-//     });
-// })
 
 exports.getLastFivePosts = async (req, res) => {
 	const lastFive = await Post.find();
 	if (lastFive.length >= 6) {
 		sendMeBack = lastFive.slice(lastFive.length - 6);
 		res.status(200).json(sendMeBack);
+	} else if (!lastFive) {
+		res.status(400).json("No recent blogs");
 	} else {
-		res.status(400).json({ error: error.message });
+		res.status(200).json(lastFive);
 	}
 };
-
-// exports.getLastFivePosts = async (req, res) => {
-// 	try {
-// 		const lastFive = await Post.find().sort({ date: "desc" }).limit(5).exec(function(error, lastFive) {
-// 			if (error) {
-// 				res.status(400).json({ error: error.message })
-// 			} else {
-// 				res.status(200).json(lastFive);
-// 			}
-// 		});
-// 		console.log(lastFive);
-// 		res.status(200).json(lastFive);
-// 	} catch (error) {
-// 		res.status(400).json({ error: error.message });
-// 	}
-// };
-// .sort({ created: "1" })
-// .limit(1)
-// .exec(function (error, lastFive) {
-// 	if (error) {
-// 		res.status(400).json({ error: error.message });
-// 	} else {
-// 		res.status(200).json(lastFive);
-// 	}
-// });

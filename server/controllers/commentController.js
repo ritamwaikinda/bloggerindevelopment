@@ -3,10 +3,11 @@ const Comment = require("../db/models/comment");
 const User = require("../db/models/user");
 const Post = require("../db/models/post");
 
-//unsecured
+//secured
 exports.addComment = async (req, res) => {
-	const { user, text, post } = req.body;
-	console.log(req.params.id);
+	const { user, text } = req.body;
+	const post = req.params.id;
+	console.log(req.body);
 	try {
 		const comment = new Comment({
 			user,
@@ -14,27 +15,27 @@ exports.addComment = async (req, res) => {
 			post,
 		});
 		await comment.save();
+		const userComments = await User.findById(req.body.user);
 		const postComments = await Post.findById(req.params.id);
-		postComments.comments.push(comment);
-		await postComments.save();
-		const userComments = await User.findOne(postComments.owner);
 		userComments.comments.push(comment);
+		postComments.comments.push(comment);
 		await userComments.save();
+		await postComments.save();
 		res.status(200).json({ message: "comment submitted" });
 	} catch (err) {
 		res.status(400).json({ error: err.message });
 	}
 };
 
-//secured
 exports.editComment = async (req, res) => {
 	const edits = Object.keys(req.body);
 	try {
-		const comments = await Comment.findById(id);
-		if (!comment) return res.status(404).json({ message: "comment not found" });
+		const comments = await Comment.findById(req.params.id);
+		if (!comments)
+			return res.status(404).json({ message: "comment not found" });
 		edits.forEach((edit) => (comments[edit] = req.body[edit]));
-		await comment.save();
-		res.status(201).json(comment);
+		await comments.save();
+		res.status(201).json(comments);
 	} catch (error) {
 		res.status(400).json({ error: error.message });
 	}
@@ -53,33 +54,41 @@ exports.deleteCommentById = async (req, res) => {
 	}
 };
 
-exports.deleteAllComments = async (comments = []) => {
-	const deleteComments = comments.map(async (comment) => {
-		await Comment.findByIdAndDelete(comment._id);
-	});
-	await Promise.all(deleteComments);
+//meeeeeh... just try again later lol
+exports.deleteAllComments = async (req, res) => {
+	const { id } = req.params.id;
+	console.log(req.params.id);
+	if (!user.isAdmin) {
+		console.log(user.isAdmin);
+		return res.status(404).json({ message: "user unauthorized" });
+	} else {
+		try {
+			const comments = await Comment.deleteMany({ post: req.params.id });
+			const guestComments = await GuestComment.deleteMany({
+				post: req.params.id,
+			});
+			if (!comments && !guestComments) {
+				return res
+					.status(404)
+					.json({ message: "No comments found for this post" });
+			}
+			await res.status(200).json({
+				message: "All comments have been deleted from this blog post.",
+			});
+		} catch (error) {
+			res.status(400).json({ error: error.message });
+		}
+	}
 };
 
-exports.getAllCommentsByPost = async (req, res) => {
-	Post.findById(req.body.id)
-		.populate("comments")
-		.exec((err, user) => {
-			if (err) {
-				res.status(400).json({ error: err.message });
-			} else {
-				res.json(user.posts);
-			}
-		});
-};
-
-exports.getAllCommentsByUser = async (req, res) => {
-	User.findById(req.body.id)
-		.populate("comments")
-		.exec((err, user) => {
-			if (err) {
-				res.status(400).json({ error: err.message });
-			} else {
-				res.json(user.comments);
-			}
-		});
-};
+// 		if (!user.isAdmin)
+// 			return res.status(404).json({ message: "user unauthorized" });
+// 		const deleteComments = await comments.map(async (comment) => {
+// 			await Comment.findByIdAndDelete(comment._id);
+// 		});
+// 		await Promise.all(deleteComments);
+// 		res.status(200).json("All comments have been deleted from this blog post.");
+// 	} catch (error) {
+// 		res.status(400).json({ error: error.message });
+// 	}
+// };

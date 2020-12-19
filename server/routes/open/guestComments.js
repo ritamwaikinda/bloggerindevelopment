@@ -1,13 +1,13 @@
 const router = require("express").Router(),
 	{
-		addComment,
+		addGuestComment,
 		getAllCommentsByPost,
 		getAllCommentsByUser,
-	} = require("../../controllers/commentController");
+	} = require("../../controllers/guestCommentController");
 
-router.post("/article/:id/comments", addComment);
+router.post("/article/:id/comments", addGuestComment);
 router.get("/article/:id/comments", getAllCommentsByPost);
-router.get("/user/archives/comments", getAllCommentsByUser);
+router.get("/:id/archives/comments", getAllCommentsByUser);
 // router.get('/', findCommentById); /*find all comments*/ to reply? nah
 
 module.exports = router;
