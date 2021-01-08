@@ -1,16 +1,26 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, /*useContext*/ } from "react";
+// import { Link } from "react-router-dom";
 import axios from "axios";
-import { AppContext } from "../../Context/AppContext";
+// import { AppContext } from "../../Context/AppContext";
 import "../Home/Home.css";
 
 function Home() {
-const [user, setUser] = useState("");
-const [article, setArticle] = useState("");
+const [latest, setLatest] = useState("");
+// const [author, setAuthor] = useState("");
 
 useEffect(() => {
     axios.get(`/blog/latest`)
-})
+    .then((article) => {
+        console.log(article);
+        setLatest(article.data);
+        // setAuthor(latest[i].owner);
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+}, []);
+console.log(latest);
+// console.log(author);
 
     return (
                 <div className="articleBody">
@@ -24,15 +34,31 @@ Flannel tbh gochujang subway tile, chillwave hella marfa schlitz. Taxidermy ramp
                     </div>
 
                     <div className="articlesRight">
-                        {article && (
-                        article.map((article) => {
-                        return (
-                            <>
-                                <div className="articleTitle"> ${article.title} </div>
-                                <div className="articleTime"> ${article.timestamp} </div>
-                            </>
-                        );})
-                        )}
+                        <div className="articlesWelcome">
+                            <h1 className="listTitle">Latest Blog Posts</h1>
+                            <h3 className="listSummary">Take a look at some of our <br/>latest posts by our wonderful authors...</h3>
+                        </div>
+                        <div className="articleList">
+                            {latest && (
+                            latest.map((latest, i) => {
+                                return (
+                                    <div className="eachArticle" key={i}>
+                                        <div className="articleTitle"> {latest.title} </div>
+                                        <div className="articleTime"> {latest.createdAt} </div>
+                                        <div className="articleText"> {latest.text} </div>
+                                        <div className="articleOwner"> {latest.owner} </div>
+                                    </div>
+                                );})
+                            )}
+                            {/* {author && (
+                            author.map((author, i) => {
+                                return (
+                                    <>
+                                        <div className="articleAuthor" key={i}> - by {author.firstName} {author.lastName} </div>
+                                    </>
+                                );})
+                            )}       */}
+                         </div>    
                     </div>
 
                 </div>

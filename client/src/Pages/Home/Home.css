@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Langar&display=swap");
+
 body {
 	margin: 0;
 }
@@ -6,7 +9,6 @@ body {
 	height: 3em;
 	width: 100%;
 }
-
 .articleBody {
 	margin: 0;
 	display: flex;
@@ -16,13 +18,13 @@ body {
 }
 .mainLeft {
 	background-image: url(../../Assets/Images/escape.jpg);
+	filter: grayscale(36%);
 	background-repeat: no-repeat;
 	background-size: cover;
-	/* opacity: 0.9; */
-	/* background-attachment: fixed; */
+	position: relative;
+	background-attachment: fixed;
 	margin: 0;
 	width: 70%;
-	/* border: 3px solid green; */
 }
 
 .title {
@@ -34,21 +36,55 @@ body {
 }
 .aboutBlog {
 	color: white;
+	text-shadow: 12px 12px 8px black;
 	font-size: 32px;
 	text-align: left;
 	padding: 4rem;
-	background: blur;
+	backdrop-filter: blur(3px);
 }
 .articlesRight {
-	/* border: 3px solid orange; */
+	border: 3px solid orange;
 	width: 30%;
 	background-color: silver;
+	display: flex;
+	flex-direction: column;
+}
+.articlesWelcome {
+	width: 80%;
+	align-self: center;
+	text-align: right;
+	padding-top: 60px;
+}
+.listTitle {
+	margin-bottom: 5px;
+	font-family: "Cedarville Cursive", cursive;
+	font-size: 2.4em;
+}
+.listSummary {
+	margin-top: 0;
+	margin-bottom: 20px;
+	font-family: "Langar", cursive;
+}
+.articleList {
+	width: 60%;
+	margin: 2em;
+	align-self: center;
+}
+.eachArticle {
+	margin: 4em;
+	border: 1px solid red;
 }
 .articleTitle {
-	/* border: 3px solid aqua; */
+	border: 3px solid aqua;
 }
 .articleTime {
-	/* border: 3px solid brown; */
+	border: 3px solid brown;
+}
+.articleText {
+	border: 3px solid yellow;
+}
+.articleAuthor {
+	border: 3px solid purple;
 }
 .footer {
 	/* border: 3px solid darkkhaki; */

@@ -6,11 +6,11 @@ function Navbar() {
     return (
             <div className="navbar">
                 <ul>
-                    <li><Link to="/home" class="buttons">Home</Link></li>
-                    <li><Link to="/login" class="buttons">About</Link></li>
-                    <li><Link to="/signup" class="buttons">Services</Link></li>
-                    <li><Link to="/account" class="buttons">FeedBack</Link></li>
-                    <li><Link to="/articles" class="buttons">Contact</Link></li>
+                    <li><Link to="/home" className="buttons">Home</Link></li>
+                    <li><Link to="/login" className="buttons">About</Link></li>
+                    <li><Link to="/signup" className="buttons">Services</Link></li>
+                    <li><Link to="/account" className="buttons">FeedBack</Link></li>
+                    <li><Link to="/articles" className="buttons">Contact</Link></li>
                     
                 </ul>
             </div>

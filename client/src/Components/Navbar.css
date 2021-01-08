@@ -1,7 +1,6 @@
 .navbar {
 	display: flex;
 	justify-content: flex-end;
-	background-color: transparent;
 }
 ul {
 	position: absolute;
